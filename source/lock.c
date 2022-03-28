@@ -11,6 +11,8 @@
  *
  * @param l pointer to lock to be initialised
  */
+#include "lock.h"
+
 void l_init(lock_t* l){
 	//code here
 }
