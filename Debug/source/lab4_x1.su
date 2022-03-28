@@ -1,0 +1,4 @@
+../source/lab4_x1.c:14:6:p1	8	static
+../source/lab4_x1.c:39:6:reader	8	static
+../source/lab4_x1.c:69:6:writer	8	static
+../source/lab4_x1.c:97:5:main	8	static
