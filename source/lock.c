@@ -1,10 +1,3 @@
-/*
- * lock.c
- *
- *  Created on: Mar 28, 2022
- *      Author: lukegriffiths
- */
-
 
 /**
  * Initialises the lock structure
@@ -15,6 +8,7 @@
 
 void l_init(lock_t* l){
 	//code here
+	l->isLocked = 0;
 }
 
 /**
@@ -24,6 +18,22 @@ void l_init(lock_t* l){
  */
 void l_lock(lock_t* l){
 	//code here
+	//disable interrupts
+	PIT->CHANNEL[0].TCTRL = 1;
+	//if isLocked false, then grab it, else call process_blocked
+	if (!l->isLocked){
+		l->isLocked = 1;
+	}
+	else{
+		process_blocked();
+		enqueue(*l);
+
+	}
+
+
+	//re-enable interrupts
+	PIT->CHANNEL[0].TCTRL = 3;
+
 }
 
 /**
@@ -33,5 +43,54 @@ void l_lock(lock_t* l){
  * @param l pointer to lock to be unlocked
  */
 void l_unlock(lock_t* l){
-	//code here
+	//disable interrupts
+	PIT->CHANNEL[0].TCTRL = 1;
+
+	l->isLocked = 0;
+	l->lockQueue.dequeue();
+
+	//re-enable interrupts
+	PIT->CHANNEL[0].TCTRL = 3;
+
+}
+static process_t * dequeue() {
+
+	if (!process_queue) return NULL;
+
+	process_t *proc = process_queue;
+
+	process_queue = proc->next;
+
+	if (process_tail == proc) {
+
+		process_tail = NULL;
+
+	}
+
+	proc->next = NULL;
+
+	return proc;
+
+}
+
+
+
+static void enqueue(process_t *proc) {
+
+	if (!process_queue) {
+
+		process_queue = proc;
+
+	}
+
+	if (process_tail) {
+
+		process_tail->next = proc;
+
+	}
+
+	process_tail = proc;
+
+	proc->next = NULL;
+
 }

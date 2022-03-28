@@ -17,7 +17,8 @@ struct process_state {	//Creating Process State Structure
  * This defines the lock structure
  */
 typedef struct lock_state {
-	
+	int isLocked;
+	struct process_state* lockQueue;
 } lock_t;
 
 /**
