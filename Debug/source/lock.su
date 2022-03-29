@@ -1,0 +1,3 @@
+../source/lock.c:9:6:l_init	16	static
+../source/lock.c:20:6:l_lock	16	static
+../source/lock.c:45:6:l_unlock	24	static

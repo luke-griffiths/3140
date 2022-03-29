@@ -199,3 +199,30 @@ int process_create (void (*f)(void), int n) {
 	return 0;
 
 }
+//add a process to a queue
+void enqueue(process_t* t, process_t** queue){
+	t->next = NULL;
+	//if the queue is empty, put t on the queue
+	if (*queue == NULL) {
+		*queue = t;
+		return;
+	}
+	//else make the last element of the queue point to t (the process being added)
+	process_t* process = *queue;
+	//iterate to the last item on the queue (which has a null next attribute)
+	while (process->next != NULL){
+		process = process->next;
+	}
+	//set next of the last item to t. Now t is the last item.
+	process->next = t;
+	return;
+}
+//returns the top item on any queue
+process_t* dequeue(process_t** q){
+	//get first item on the queue
+	process_t* process = *q;
+	//make the second item top of the queue
+	*q = (*q)->next;
+	process->next = NULL;
+	return process;
+}
