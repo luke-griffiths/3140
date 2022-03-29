@@ -18,7 +18,6 @@ void l_init(lock_t* l){
  * @param l pointer to lock to be grabbed
  */
 void l_lock(lock_t* l){
-	//code here
 	//disable interrupts
 	PIT->CHANNEL[0].TCTRL = 1;
 	//if isLocked false, then grab the lock, else call process_blocked
@@ -26,11 +25,12 @@ void l_lock(lock_t* l){
 		l->isLocked = 1;
 	}
 	else{
+		//set current process to be blocked.
+		current_process->process_blocked = 1;
 		//add process to blocked queue and call process_blocked
 		enqueue(current_process, &(l->lockQueue));
 		process_blocked();
 	}
-
 	//re-enable interrupts
 	PIT->CHANNEL[0].TCTRL = 3;
 
@@ -45,21 +45,17 @@ void l_lock(lock_t* l){
 void l_unlock(lock_t* l){
 	//disable interrupts
 	PIT->CHANNEL[0].TCTRL = 1;
-
+	//lock is unlocked
 	l->isLocked = 0;
-	//if no processes are waiting, do nothing
-	//else take all processes waiting on this lock off the queue
-	//while(l->lockQueue != NULL){
-	//	process_t* removed = dequeue(&(l->lockQueue));
-		//put them back on the main queue
-	//	enqueue(removed, &process_queue);
-
-	// just release the first process i guess
+	//if there is a queue
 	if(l->lockQueue != NULL){
+		//remove the first process from the queue
 		process_t* removed = dequeue(&(l->lockQueue));
+		//set the process as not blocked, and add to end of the process queue
+		removed->process_blocked = 0;
+		//push_tail_process(removed);
 		enqueue(removed, &process_queue);
 	}
-
 	//re-enable interrupts
 	PIT->CHANNEL[0].TCTRL = 3;
 

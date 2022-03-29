@@ -1,35 +1,11 @@
 #include "3140_concur.h"
-
-
-
-// The process_t structure definition
-
-struct process_state {
-
-	unsigned int *sp;
-
-	unsigned int *orig_sp;
-
-	int n;
-
-	struct process_state *next;
-
-};
-
-
-
-/* the currently running process. current_process must be NULL if no process is running,
-
-    otherwise it must point to the process_t of the currently running process
-
-*/
+#include "shared_structs.h"
 
 process_t * current_process = NULL;
 
 process_t * process_queue = NULL;
 
 process_t * process_tail = NULL;
-
 
 
 static process_t * pop_front_process() {
@@ -53,8 +29,7 @@ static process_t * pop_front_process() {
 }
 
 
-
-static void push_tail_process(process_t *proc) {
+void push_tail_process(process_t *proc) {
 
 	if (!process_queue) {
 
@@ -100,8 +75,11 @@ unsigned int * process_select (unsigned int * cursp) {
 
 		current_process->sp = cursp;
 
-		push_tail_process(current_process);
+		if(!current_process->process_blocked){ //Only add the process if it isn't blocked.
 
+			push_tail_process(current_process);
+
+		}
 	} else {
 
 		// Check if a process was running, free its resources if one just finished
@@ -152,12 +130,6 @@ void process_start (void) {
 
 	NVIC_EnableIRQ(PIT_IRQn);
 
-	// Don't enable the timer yet. The scheduler will do so itself
-
-
-
-	// Bail out fast if no processes were ever created
-
 	if (!process_queue) return;
 
 	process_begin();
@@ -174,8 +146,6 @@ int process_create (void (*f)(void), int n) {
 
 	if (!sp) return -1;
 
-
-
 	process_t *proc = (process_t*) malloc(sizeof(process_t));
 
 	if (!proc) {
@@ -186,19 +156,18 @@ int process_create (void (*f)(void), int n) {
 
 	}
 
-
-
 	proc->sp = proc->orig_sp = sp;
 
+	proc->process_blocked = 0;	//New process is not blocked.
+
 	proc->n = n;
-
-
 
 	push_tail_process(proc);
 
 	return 0;
 
 }
+
 //add a process to a queue
 void enqueue(process_t* t, process_t** queue){
 	t->next = NULL;
