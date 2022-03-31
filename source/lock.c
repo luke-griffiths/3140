@@ -1,9 +1,3 @@
-
-/**
- * Initializes the lock structure
- *
- * @param l pointer to lock to be initialized
- */
 #include "lock.h"
 
 //Helper function to pop the front process off of the lock queue
@@ -15,6 +9,7 @@ process_t * l_pop_front_process(lock_t *l) {
 	return proc;
 }
 
+//Helper function to enqueue a process to the lock queue
 void l_enqueue(process_t* newProc, lock_t* l){
 	if (l->lockQueue == NULL) {	//If there is no queue, make the process the first element in the queue
 		l->lockQueue = newProc;
@@ -29,6 +24,11 @@ void l_enqueue(process_t* newProc, lock_t* l){
 	}
 }
 
+/**
+* Initializes the lock structure
+*
+* @param l pointer to lock to be initialized
+*/
 void l_init(lock_t* l){
 	//set lock to unlocked, initialize the lock queue
 	l->isLocked = 0;
@@ -74,9 +74,9 @@ void l_unlock(lock_t* l){
 	else{
 		//remove the first process from the queue
 		process_t* removed = l_pop_front_process(l);
-		//set the process as not blocked, and add to end of the process queue
+		//set the process as not blocked
 		removed->process_blocked = 0;
-		//push_tail_process(removed);
+		//add to end of the process queue
 		push_tail_process(removed);
 	}
 	//re-enable interrupts
