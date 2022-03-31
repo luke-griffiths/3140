@@ -1,4 +1,4 @@
-source/lab4_l1.o source/lab4_l1.d: ../source/lab4_l1.c \
+source/testl2.o source/testl2.d: ../source/testl2.c \
  ../source/3140_concur.h \
  /Users/tuckerstanley/Desktop/CS\ 3420/3140/CMSIS/MKL46Z4.h \
  /Users/tuckerstanley/Desktop/CS\ 3420/3140/CMSIS/core_cm0plus.h \

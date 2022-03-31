@@ -6,27 +6,13 @@
 /**
  * This structure holds the process structure information
  */
-/*struct process_state {	//Creating Process State Structure
-	unsigned int *originalSP;
-	unsigned int *currentSP;
-	int size;
-	struct process_state* nextProcess;
-	int process_blocked;
-};*/
 
 typedef struct process_state {
-
 	unsigned int *sp;
-
 	unsigned int *orig_sp;
-
 	int n;
-
 	struct process_state *next;
-
 	int process_blocked;
-
-
 } process_t;
 
 /**

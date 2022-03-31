@@ -5,5 +5,3 @@
 ../source/process.c:70:16:process_select	16	static
 ../source/process.c:123:6:process_start	8	static
 ../source/process.c:143:5:process_create	24	static
-../source/process.c:172:6:enqueue	24	static
-../source/process.c:190:12:dequeue	24	static
