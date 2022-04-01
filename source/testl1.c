@@ -13,10 +13,10 @@ void p1(void){
 	delay();
 	LEDRed_Toggle();
 	delay();
+	delay();
 	LEDRed_Toggle();
 	delay();
 	l_lock(&l2);
-
 	LEDGreen_Toggle();
 	delay();
 	LEDGreen_Toggle();
@@ -29,12 +29,14 @@ void p1(void){
 void p2(void){
 	l_lock(&l2);
 	delay();
+	delay();
 	LEDRed_Toggle();
+	delay();
+	delay();
 	delay();
 	LEDRed_Toggle();
 	delay();
 	l_lock(&l1);
-
 	LEDGreen_Toggle();
 	delay();
 	LEDGreen_Toggle();

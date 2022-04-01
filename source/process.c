@@ -126,7 +126,7 @@ void process_start (void) {
 
 	PIT->MCR = 0;
 
-	PIT->CHANNEL[0].LDVAL = DEFAULT_SYSTEM_CLOCK / 10;
+	PIT->CHANNEL[0].LDVAL = 25000;
 
 	NVIC_EnableIRQ(PIT_IRQn);
 

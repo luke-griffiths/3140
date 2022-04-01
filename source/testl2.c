@@ -32,6 +32,7 @@ void p1(void){
 void p2(void){
 	l_lock(&l2);
 	delay();
+	delay();
 	LEDGreen_Toggle();
 	delay();
 	LEDGreen_Toggle();

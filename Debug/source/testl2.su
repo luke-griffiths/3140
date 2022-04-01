@@ -1,4 +1,4 @@
 ../source/testl2.c:14:6:p1	8	static
 ../source/testl2.c:32:6:p2	8	static
-../source/testl2.c:42:6:p3	8	static
-../source/testl2.c:52:5:main	8	static
+../source/testl2.c:43:6:p3	8	static
+../source/testl2.c:53:5:main	8	static
