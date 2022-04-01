@@ -8,7 +8,7 @@ S_SRCS += \
 
 C_SRCS += \
 ../source/3140_concur.c \
-../source/lab4_l1.c \
+../source/lab4_l0.c \
 ../source/lock.c \
 ../source/process.c \
 ../source/utils.c 
@@ -16,14 +16,14 @@ C_SRCS += \
 OBJS += \
 ./source/3140.o \
 ./source/3140_concur.o \
-./source/lab4_l1.o \
+./source/lab4_l0.o \
 ./source/lock.o \
 ./source/process.o \
 ./source/utils.o 
 
 C_DEPS += \
 ./source/3140_concur.d \
-./source/lab4_l1.d \
+./source/lab4_l0.d \
 ./source/lock.d \
 ./source/process.d \
 ./source/utils.d 
